@@ -2,7 +2,13 @@ import { GET_EXAMPLE_MODEL } from './constants'
 import Resource from '../../utils/resource'
 
 const Model = new Resource('/Model', {
-
+  // customMethod: {
+  //   url: '{id}/pathname',
+  //   method: 'get', // get, post, put, delete
+  //   defaultParams: {
+  //     id: 'me',
+  //   },
+  // },
 })
 
 export const getPurchaseReceiptById = param => dispatch => {
@@ -15,4 +21,3 @@ export const getPurchaseReceiptById = param => dispatch => {
       }))
     .catch(error => dispatch({ type: GET_EXAMPLE_MODEL.failure, error }))
 }
-
