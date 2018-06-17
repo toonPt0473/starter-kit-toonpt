@@ -1,0 +1,201 @@
+{
+  "New Constant": {
+    "prefix": "newCons",
+    "body": [
+      "import generateType from '../../utils/generateType'",
+      "",
+      "export const NAME = 'modelName/$1/action/'",
+      "export const $2 = generateType(NAME, '$2')",
+      ""
+    ]
+  },
+  "Add Constant": {
+    "prefix": "addCons",
+    "body": [
+      "export const $2 = generateType(NAME, '$2')",
+      ""
+    ]
+  },
+  "New Reducer": {
+    "prefix": "newReducer",
+    "body": [
+      "import { $1 } from './constants'",
+      "",
+      "const initialState = {",
+      "  payload: {},",
+      "  loading: false,",
+      "  error: false,",
+      "}",
+      "",
+      "export default function reducer(state = initialState, action = {}) {",
+      "  switch (action.type) {",
+      "    case $1.request:",
+      "      return {",
+      "        ...state,",
+      "        loading: true,",
+      "        error: false,",
+      "      }",
+      "    case $1.success:",
+      "      return {",
+      "        ...state,",
+      "        loading: false,",
+      "        error: false,",
+      "        payload: action.payload,",
+      "      }",
+      "    case $1.failure:",
+      "      return {",
+      "        ...state,",
+      "        loading: false,",
+      "        error: action.error,",
+      "      }",
+      "    default:",
+      "      return state",
+      "  }",
+      "}",
+      ""
+    ]
+  },
+  "Add Reducer": {
+    "prefix": "addReducer",
+    "body": [
+      "case $1.request:",
+      "  return {",
+      "    ...state,",
+      "    loading: true,",
+      "    error: false,",
+      "  }",
+      "case $1.success:",
+      "  return {",
+      "    ...state,",
+      "    loading: false,",
+      "    error: false,",
+      "    payload: action.payload,",
+      "  }",
+      "case $1.failure:",
+      "  return {",
+      "    ...state,",
+      "    loading: false,",
+      "    error: action.error,",
+      "  }"
+    ]
+  },
+  "New Redux Index": {
+    "prefix": "newReduxIndex",
+    "body": [
+      "import { NAME } from './constants'",
+      "import reducer from './reducer'",
+      "import * as actions from './actions'",
+      "",
+      "export default {",
+      "  NAME,",
+      "  reducer,",
+      "  actions,",
+      "}"
+    ]
+  },
+  "New Action": {
+    "prefix": "newAction",
+    "body": [
+      "import { $2 } from './constants'",
+      "import Resource from '../../utils/resource'",
+      "",
+      "const $3 = new Resource('/$3', {",
+      "",
+      "})",
+      "",
+      "export const $1 = () => dispatch => {",
+      "  dispatch($2.request)",
+      "  $3.$4()",
+      "    .then(response =>",
+      "      dispatch({",
+      "        type: $2.success,",
+      "        payload: response,",
+      "      }))",
+      "    .catch(error => dispatch({ type: $2.failure, error }))",
+      "}",
+      ""
+    ]
+  },
+  "Add Action": {
+    "prefix": "addAction",
+    "body": [
+      "export const $1 = () => dispatch => {",
+      "  dispatch($2.request)",
+      "  $3.$4()",
+      "    .then(response =>",
+      "      dispatch({",
+      "        type: $2.success,",
+      "        payload: response,",
+      "      }))",
+      "    .catch(error => dispatch({ type: $2.failure, error }))",
+      "}",
+      ""
+    ]
+  },
+  "New Container": {
+    "prefix": "newContainer",
+    "body": [
+      "import React, { Component } from 'react'",
+      "import { connect } from 'react-redux'",
+      "// import PropTypes from 'prop-types'",
+      "",
+      "class $1 extends Component {",
+      "  render() {",
+      "    return (",
+      "      <div>",
+      "        $1 container",
+      "      </div>",
+      "    )",
+      "  }",
+      "}",
+      "",
+      "$1.propTypes = {",
+      "",
+      "}",
+      "$1.defaultProps = {",
+      "",
+      "}",
+      "const mapStateToProps = state => ({ // eslint-disable-line",
+      "",
+      "})",
+      "const mapDispatchToProps = dispatch => ({",
+      "  dispatch,",
+      "})",
+      "",
+      "export default connect(mapStateToProps, mapDispatchToProps)($1)",
+      ""
+    ]
+  },
+  "New Component": {
+    "prefix": "newComponent",
+    "body": [
+      "import React, { Component } from 'react'",
+      "import styled from 'styled-components'",
+      "// import PropTypes from 'prop-types'",
+      "",
+      "const Container = styled.div`",
+      "",
+      "`",
+      "",
+      "class $1 extends Component {",
+      "  render() {",
+      "    return (",
+      "      <Container>",
+      "        $1 component",
+      "      </Container>",
+      "    )",
+      "  }",
+      "}",
+      "",
+      "$1.propTypes = {",
+      "",
+      "}",
+      "$1.defaultProps = {",
+      "",
+      "}",
+      "",
+      "export default $1",
+      ""
+    ]
+  }
+}
