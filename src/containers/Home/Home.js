@@ -15,6 +15,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         Home container
@@ -31,7 +32,7 @@ Home.defaultProps = {
 
 }
 const mapStateToProps = state => ({ // eslint-disable-line
-
+  xxx: state,
 })
 const mapDispatchToProps = dispatch => ({
   dispatch,
