@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Door from '../../components/Door/Door'
+import { exampleModel } from '../../redux/index'
 
 class Home extends Component {
+  componentWillMount() {
+    const params = {
+      method: '',
+      params: '',
+    }
+    this.props.dispatch(exampleModel.actions.getCurrentUser(params))
+  }
+
   render() {
     return (
       <div>
@@ -16,7 +25,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-
+  dispatch: PropTypes.object, // eslint-disable-line
 }
 Home.defaultProps = {
 
