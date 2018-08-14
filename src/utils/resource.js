@@ -1,7 +1,8 @@
-import request from './request';
+import request from './request'
+
 class Resource {
   constructor(url, customActions) {
-    this.url = url;
+    this.url = url
     this.actions = {
       find: {
         url: `${url}`,
@@ -35,17 +36,17 @@ class Resource {
         url: `${url}/upsertWithWhere?where={where}`,
         method: 'post',
       },
-    };
-    this.build({ ...this.actions, ...customActions });
+    }
+    this.build({ ...this.actions, ...customActions })
   }
   build(actions) {
     Object.keys(actions).forEach((key) => {
-      const config = actions[key];
+      const config = actions[key]
       if (!config.url.startsWith('/')) {
-        config.url = `${this.url}/${config.url}`;
+        config.url = `${this.url}/${config.url}`
       }
-      this[key] = (data, options = {}) => request(data, config, options);
-    });
+      this[key] = (data, options = {}) => request(data, config, options)
+    })
   }
 }
-export default Resource;
+export default Resource

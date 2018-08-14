@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 // import PropTypes from 'prop-types'
-
-import Door from '../../components/Door/Door'
 
 class Home extends Component {
   render() {
     return (
       <div>
         Home container
-        <Door />
       </div>
     )
   }
@@ -24,9 +22,12 @@ Home.defaultProps = {
 const mapStateToProps = state => ({ // eslint-disable-line
 
 })
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-})
+const mapDispatchToProps = dispatch => {
+  console.dir(dispatch)
+  return {}
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+const withStore = connect(mapStateToProps, mapDispatchToProps)
+
+export default compose(withStore)(Home)
 
