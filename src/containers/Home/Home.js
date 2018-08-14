@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 class Home extends Component {
   render() {
@@ -14,7 +14,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-
+  dispatch: PropTypes.object, // eslint-disable-line
 }
 Home.defaultProps = {
 
@@ -22,10 +22,9 @@ Home.defaultProps = {
 const mapStateToProps = state => ({ // eslint-disable-line
 
 })
-const mapDispatchToProps = dispatch => {
-  console.dir(dispatch)
-  return {}
-}
+const mapDispatchToProps = dispatch => ({ // eslint-disable-line
+
+})
 
 const withStore = connect(mapStateToProps, mapDispatchToProps)
 

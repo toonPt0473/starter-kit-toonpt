@@ -1,9 +1,3 @@
-import Resource from '../utils/resource'
-
-const countAPI = new Resource('count', {
-
-})
-
 export const count = {
   state: {
     list: [],
@@ -30,12 +24,12 @@ export const count = {
       }
     },
   },
-  effects: (dispatch) => ({
-    async getCountList(payload) {
-      const result = await countAPI.find({ payload })
-      dispatch.count.changeList(result)
-    },
-  }),
+  // effects: (dispatch) => ({
+  //   async getCountList(payload) {
+  //     const result = await countAPI.find({ payload })
+  //     dispatch.count.changeList(result)
+  //   },
+  // }),
 }
 
 export default count
