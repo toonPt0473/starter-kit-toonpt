@@ -1,0 +1,89 @@
+/**
+*
+* {{ extractClassName name }}
+*
+*/
+
+import query from './query'
+
+export const {{ extractClassName name }} = {
+  state: {
+    list: {
+      data: [],
+      error: null,
+    },
+    findById: {
+      data: {},
+      error: null,
+    },
+    update: {
+      data: {},
+      error: null,
+    },
+  },
+  reducers: {
+    changeList(state, payload) {
+      return {
+        ...state,
+        list: {
+          error: null,
+          data: payload,
+        },
+      }
+    },
+    listError(state, payload) {
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          error: payload,
+        },
+      }
+    },
+    changeFindById(state, payload) {
+      return {
+        ...state,
+        findById: {
+          error: null,
+          data = payload,
+        },
+      }
+    },
+    findByIdError(state, payload) {
+      return {
+        ...state,
+        findById: {
+          ...state.findById,
+          error = payload,
+        },
+      }
+    },
+    changeUpdate(state, payload) {
+      return {
+        ...state,
+        update: {
+          error: null,
+          data = payload,
+        },
+      }
+    },
+    updateError(state, payload) {
+      return {
+        ...state,
+        findById: {
+          ...state.update,
+          error = payload,
+        },
+      }
+    },
+  },
+  // effects: (dispatch) => ({
+  //   async getCountList(payload) {
+  //     const result = await query.find({ payload })
+  //     dispatch.count.changeList(result)
+  //   },
+  // }),
+
+}
+
+export default {{ extractClassName name }}

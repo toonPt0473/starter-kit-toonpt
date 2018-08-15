@@ -1,0 +1,17 @@
+import gql from 'graphql-tag'
+import config from '../../utils/apollo-config'
+
+const { client } = config
+
+export function defualtQuery() {
+  return client.query({
+    // query string form graph document
+    query: gql``,
+    // declare variable for query
+    variables: {},
+  })
+}
+
+export default {
+  defualtQuery,
+}
