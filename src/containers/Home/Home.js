@@ -14,7 +14,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  dispatch: PropTypes.object, // eslint-disable-line
+
 }
 Home.defaultProps = {
 

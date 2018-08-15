@@ -3,6 +3,15 @@ import config from '../../utils/apollo-config'
 
 const { client } = config
 
+export function defualtQuery() {
+  return client.query({
+    // query string form graph document
+    query: gql``,
+    // declare variable for query
+    variables: {},
+  })
+}
+
 export const login = (param) => {
   const { email, password } = param
   return client.mutate({
@@ -35,6 +44,9 @@ export const register = (param) => {
     variables: { username, password },
   })
 }
+
 export default {
+  defualtQuery,
   login,
+  register,
 }

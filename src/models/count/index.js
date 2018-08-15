@@ -1,14 +1,37 @@
+import query from './query'
+
 export const count = {
   state: {
-    list: [],
-    findById: {},
-    update: {},
+    list: {
+      data: [],
+      error: null,
+    },
+    findById: {
+      data: {},
+      error: null,
+    },
+    update: {
+      data: {},
+      error: null,
+    },
   },
   reducers: {
     changeList(state, payload) {
       return {
         ...state,
-        list: payload,
+        list: {
+          error: null,
+          data: payload,
+        },
+      }
+    },
+    listError(state, payload) {
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          error: payload,
+        },
       }
     },
     changeFindById(state, payload) {
