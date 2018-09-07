@@ -1,6 +1,6 @@
 toonpt' starter kit with
 1.  react
-2.  redux(thunk)
+2.  rematch
 3.  router
 4.  snippets for starter kit(optional)
 5.  eslint w/ rule

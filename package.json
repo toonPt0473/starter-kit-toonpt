@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rematch/core": "^0.6.0",
+    "@rematch/loading": "^1.1.0",
     "antd": "^3.6.2",
     "axios": "^0.18.0",
-    "history": "^4.7.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "prop-types": "^15.6.1",
@@ -14,10 +15,8 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-router-redux": "5.0.0-alpha.9",
     "react-scripts": "1.1.4",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
+    "recompose": "^0.30.0",
     "styled-components": "^3.3.2"
   },
   "scripts": {
