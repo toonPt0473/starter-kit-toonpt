@@ -1,27 +1,23 @@
-const env = process.env.NODE_ENV || 'defaultConfig'
-let baseUrl = 'http://localhost:8000'
-const defaultConfig = {
-  baseUrl,
-  apiUrl: `${baseUrl}/api/`,
+const ENV = {
+  dev: {
+    API_URL: 'http://localhost:3000/api',
+  },
+  staging: {
+    API_URL: 'https://develop.backend.evermed.dev.witsawa.com/api',
+  },
+  prod: {
+    API_URL: 'http://localhost:3000',
+  },
 }
 
-let config = {}
-switch (env) {
-  case 'development':
-    baseUrl = 'http://localhost:8000'
-    break
-  case 'production':
-    baseUrl = 'https:/api.myproject.com'
-    break
-  default:
-    break
-}
-config = {
-  baseUrl,
-  apiUrl: `${baseUrl}/api/`,
+function getEnvVars(env = '') {
+  if (env === null || env === undefined || env === '') return ENV.dev
+
+  if (env.indexOf('dev') !== -1) return ENV.dev
+  else if (env.indexOf('staging') !== -1) return ENV.staging
+  else if (env.indexOf('prod') !== -1) return ENV.prod
+  return ENV.dev
 }
 
-export default {
-  ...defaultConfig,
-  ...config,
-}
+
+export default getEnvVars()

@@ -1,52 +1,117 @@
-import request from './request'
+import dataProvider from './dataProvider'
 
-class Resource {
-  constructor(url, customActions) {
-    this.url = url
-    this.actions = {
-      find: {
-        url: `${url}`,
-        method: 'get',
+export default function (model, apiUrl) {
+  const endpoint = `/${model}`
+  const provider = dataProvider(endpoint, apiUrl)
+  const resource = {
+    endpoint,
+    provider,
+    state: {
+      data: {},
+      ids: [],
+      errors: null,
+      dirty: false,
+    },
+    reducers: {
+      findById(state, payload) {
+        state.data[payload.id] = payload
+        return {
+          ...state,
+          errors: null,
+        }
       },
-      create: {
-        url: `${url}`,
-        method: 'post',
+      find(state, payload) {
+        const newData = payload.reduce((res, o) => {
+          res[o.id] = o
+          return res
+        }, {})
+        return {
+          ...state,
+          data: {
+            ...newData,
+          },
+          errors: null,
+        }
       },
-      findById: {
-        url: `${url}/{id}`,
-        method: 'get',
+      delete(state, payload) {
+        delete state.data[payload.id]
+        state.errors = null
+        return state
       },
-      update: {
-        url: `${url}/{id}`,
-        method: 'patch',
+      create(state, payload) {
+        state.data.new = payload
+        state.errors = null
+        return state
       },
-      delete: {
-        url: `${url}/{id}`,
-        method: 'delete',
+      update(state) {
+        state.errors = null
+        return state
       },
-      count: {
-        url: `${url}/count`,
-        method: 'get',
+      error(state, payload) {
+        return {
+          ...state,
+          errors: payload,
+        }
       },
-      findOne: {
-        url: `${url}/findOne`,
-        method: 'get',
+    },
+    effects: {
+      async findAsync(payload) {
+        try {
+          const result = await provider.find(payload)
+          return this.find(result)
+        } catch (e) {
+          this.error(e)
+          return Promise.reject(e)
+        }
       },
-      upsertWithWhere: {
-        url: `${url}/upsertWithWhere?where={where}`,
-        method: 'post',
+      async findByIdAsync(payload, rootState) {
+        try {
+          if (!rootState[model].data[payload.id] || payload.forceReload) {
+            const result = await provider.findById(payload)
+            this.findById(result)
+            return
+          }
+        } catch (e) {
+          this.error(e)
+        }
       },
-    }
-    this.build({ ...this.actions, ...customActions })
+      async deleteAsync(payload) {
+        try {
+          const { id } = payload
+          this.delete({ id })
+          return await provider.delete(payload)
+        } catch (e) {
+          this.error(e)
+          return Promise.reject(e)
+        }
+      },
+      async updateAsync(payload) {
+        try {
+          const { id } = payload
+          this.update(payload)
+          await provider.update(payload)
+          return await this.findByIdAsync({ id, forceReload: true })
+        } catch (e) {
+          this.error(e)
+          return Promise.reject(e)
+        }
+      },
+      async createAsync({ loadData = true, ...payload }) {
+        try {
+          this.create(payload)
+          const result = await provider.create(payload)
+          const { id } = result
+          if (loadData) {
+            await this.findByIdAsync({ id, forceReload: true })
+          }
+          this.delete({ id: 'new' })
+          return result
+        } catch (e) {
+          this.error(e)
+          return Promise.reject(e)
+        }
+      },
+    },
   }
-  build(actions) {
-    Object.keys(actions).forEach((key) => {
-      const config = actions[key]
-      if (!config.url.startsWith('/')) {
-        config.url = `${this.url}/${config.url}`
-      }
-      this[key] = (data, options = {}) => request(data, config, options)
-    })
-  }
+  return resource
 }
-export default Resource

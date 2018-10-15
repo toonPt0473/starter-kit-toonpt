@@ -1,0 +1,38 @@
+/**
+*
+* {{ extractClassName name }}
+*
+*/
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+// import PropTypes from 'prop-types'
+
+class {{ extractClassName name }} extends Component { // eslint-disable-line
+  render() {
+    const {
+      children,
+      ...rest
+    } = this.props
+    return (
+      React.cloneElement(children, {
+        ...rest,
+      })
+    )
+  }
+}
+
+{{ extractClassName name }}.propTypes = {
+
+}
+
+{{ extractClassName name }}.defaultProps = {
+
+}
+const mapStateToProps = state => ({ // eslint-disable-line
+
+})
+const mapDispatchToProps = dispatch => ({ // eslint-disable-line
+
+})
+export default connect(mapStateToProps, mapDispatchToProps)({{ extractClassName name }})
