@@ -26,12 +26,12 @@ module.exports = {
   actions: () => {
     const actions = [{
       type: 'add',
-      path: '../src/components/{{name}}/index.js',
+      path: '../src/components/{{ extractClassName name }}/index.js',
       templateFile: './component/class.js.hbs',
       abortOnFail: true,
     }, {
       type: 'add',
-      path: '../src/components/{{name}}/{{name}}.module.css',
+      path: '../src/components/{{ extractClassName name }}/{{ extractClassName name }}.module.css',
       templateFile: './component/css.css.hbs',
       abortOnFail: true,
     }]

@@ -2,14 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import PropTypes from 'prop-types'
 
-import Door from '../../components/Door/Door'
-
 class Home extends Component {
   render() {
     return (
       <div>
         Home container
-        <Door />
       </div>
     )
   }

@@ -5,113 +5,119 @@
 */
 
 import React from 'react'
-// import styled from 'styled-components';
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Formik } from 'formik'
 import { Button, Form } from 'antd'
+import styles from './SimpleFormLayout.module.css'
 
+const BtnContainer = styled.div`
+  text-align: center;
+  width: 100%;
+`
+
+const FormItem = Form.Item
+const formItemLayout = {
+  labelCol: {
+    xl: { span: 24 },
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+  wrapperCol: {
+    xl: { span: 24 },
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+}
 class SimpleFormLayout extends React.PureComponent { // eslint-disable-line
-  handleSubmit = (values) => {
+  handleSubmit = (e) => {
+    e.preventDefault()
     const {
       onSubmit,
     } = this.props
-    onSubmit(values)
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+        onSubmit(values)
+      }
+    })
   }
   render
   render() {
     const {
       children,
       record,
-      renderAction,
-      error,
-      validate,
-      autoSave,
-      // ...componentRestProps,
+      // renderAction,
+      submitError,
+      validate = {},
     } = this.props
+    const { getFieldDecorator } = this.props.form
     return (
-      <Formik
-        initialValues={record}
-        // style={{ flex: 1, ...this.props.style }}
-        validate={validate}
-        render={({
-          setFieldValue,
-          values,
-          errors,
-          touched,
-          // validateForm,
-          isValid,
-          // ...formikRestProps
-        }) => (
-          <Form>
-            {React.Children.map(children, child => {
-              const {
-                name,
-                ...rest
-              } = child.props
-              // console.log(name, errors,touched,values)
-              return React.cloneElement(child, {
-                onChange: (value) => {
-                  setFieldValue(name, value)
-                  if (autoSave) {
-                    const v = {
-                      ...values,
-                      [name]: value,
-                    }
-                    this.handleSubmit(v)
-                  }
-                },
-                value: values[name],
-                touched: touched[name],
-                error: errors[name],
-                ...rest,
-              })
-            })}
-            {
-              autoSave
-                ? null
-                : (
-                    renderAction
-                      ? renderAction({
-                        values,
-                        errors,
-                        touched,
-                        isValid,
-                        onSubmit: () => isValid && this.handleSubmit(values),
-                      })
-                      : (
-                        <Button
-                          disabled={!isValid}
-                          onClick={() => isValid && this.handleSubmit(values)}
-                        >
-                          Submit
-                        </Button>
-                      )
-                  )
-            }
-            {
-              error ? <h4>{error}</h4> : null
-            }
-          </Form>
-        )}
-      />
+      <Form onSubmit={this.handleSubmit} className={styles.form} >
+        {
+          React.Children.map(children, child => {
+            const {
+              name,
+              label,
+              required,
+              type,
+              ...rest
+            } = child.props
+            return (
+              <FormItem
+                {...formItemLayout}
+                label={label}
+              >
+                {getFieldDecorator(name, {
+                  initialValue: record[name],
+                  rules: [{
+                    required, message: `Please fill ${name}!`,
+                  }, {
+                    validator: validate[name],
+                  }],
+                })(React.cloneElement(child, {
+                  ...rest,
+                }))}
+              </FormItem>
+            )
+          })
+        }
+        <BtnContainer>
+          <Button
+            htmlType="submit"
+            type="primary"
+            block
+          >
+            Submit
+          </Button>
+        </BtnContainer>
+        {
+          submitError && <h4>{submitError}</h4>
+        }
+      </Form>
     )
   }
 }
 
 SimpleFormLayout.propTypes = {
+  form: PropTypes.shape({
+    validateFieldsAndScroll: PropTypes.func,
+    getFieldDecorator: PropTypes.func,
+  }).isRequired,
   onSubmit: PropTypes.func.isRequired,
+  submitError: PropTypes.string,
   renderAction: PropTypes.func,
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
   record: PropTypes.shape({
 
   }),
-  error: PropTypes.any, // eslint-disable-line
-  validate: PropTypes.any, // eslint-disable-line
-  autoSave: PropTypes.bool,
+  validate: PropTypes.shape({
+
+  }),
 }
 SimpleFormLayout.defaultProps = {
   renderAction: null,
   record: {},
-  autoSave: false,
+  validate: {},
+  submitError: null,
 }
-export default SimpleFormLayout
+export default Form.create()(SimpleFormLayout)
