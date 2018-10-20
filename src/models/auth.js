@@ -3,7 +3,7 @@ import dataProvider from '../utils/dataProvider'
 
 const provider = dataProvider()
 
-export const Auth = {
+export const auth = {
   state: {
     accessToken: false,
     userInfo: false,

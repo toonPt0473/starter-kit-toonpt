@@ -12,6 +12,7 @@ import dataProvider from '../../utils/dataProvider'
 class Show extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   state = {
     record: {},
+    error: null,
   }
   componentDidMount() {
     this.fetchModel()
@@ -22,13 +23,21 @@ class Show extends React.PureComponent { // eslint-disable-line react/prefer-sta
       model,
       modelId,
       filter = {},
+      afterSummit,
     } = this.props
     if (!modelId || !model) {
       throw new Error('Show component require props (model & modelId)')
     }
-    const provider = dataProvider(`/${model}`)
-    const record = await provider.findById({ filter, id: modelId })
-    this.setState({ record })
+    try {
+      const provider = dataProvider(`/${model}`)
+      const record = await provider.findById({ filter, id: modelId })
+      this.setState({ record })
+      if (typeof afterSummit === 'function') {
+        afterSummit()
+      }
+    } catch (error) {
+      this.setState({ error })
+    }
   }
 
   render() {
@@ -39,12 +48,13 @@ class Show extends React.PureComponent { // eslint-disable-line react/prefer-sta
       filter,
       ...rest
     } = this.props
-    const { record } = this.state
+    const { record, error } = this.state
     return (
       React.cloneElement(children, {
         ...rest,
         record,
         refreshRecord: this.fetchModel,
+        error,
       })
     )
   }

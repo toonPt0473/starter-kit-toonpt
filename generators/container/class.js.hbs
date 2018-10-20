@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 class {{ extractClassName name }} extends Component { // eslint-disable-line
   render() {
@@ -23,7 +23,7 @@ class {{ extractClassName name }} extends Component { // eslint-disable-line
 }
 
 {{ extractClassName name }}.propTypes = {
-
+  children: PropTypes.node.isRequired,
 }
 
 {{ extractClassName name }}.defaultProps = {

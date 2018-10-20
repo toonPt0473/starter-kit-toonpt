@@ -12,19 +12,28 @@ import dataProvider from '../../utils/dataProvider'
 class List extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   state = {
     data: [],
+    error: null,
   }
   componentDidMount() {
     this.fetchModel()
   }
 
   fetchModel = async () => {
-    const {
-      model,
-      filter = {},
-    } = this.props
-    const provider = dataProvider(`/${model}`)
-    const data = await provider.find({ filter })
-    this.setState({ data })
+    try {
+      const {
+        model,
+        filter = {},
+        afterSummit,
+      } = this.props
+      const provider = dataProvider(`/${model}`)
+      const data = await provider.find({ filter })
+      this.setState({ data })
+      if (typeof afterSummit === 'function') {
+        afterSummit()
+      }
+    } catch (error) {
+      this.setState({ error })
+    }
   }
 
   render() {
@@ -34,12 +43,13 @@ class List extends React.PureComponent { // eslint-disable-line react/prefer-sta
       filter,
       ...rest
     } = this.props
-    const { data } = this.state
+    const { data, error } = this.state
     return (
       React.cloneElement(children, {
         ...rest,
         data,
         refreshData: this.fetchModel,
+        error,
       })
     )
   }

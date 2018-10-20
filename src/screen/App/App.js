@@ -1,26 +1,7 @@
-// import React, { Component } from 'react'
-// import './App.css'
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     )
-//   }
-// }
-
-// export default App
-
-
 import React, { Component } from 'react'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import 'antd/dist/antd.css'
 
 import AdminLayout from '../AdminLayout/index'
@@ -30,6 +11,16 @@ import NotFoundPage from '../NotFoundPage/index'
 import './App.module.css'
 
 class App extends Component {
+  componentDidMount() {
+    this.getUser()
+  }
+  getUser = async () => {
+    try {
+      await this.props.getUserInfoAsync()
+    } catch (error) {
+      console.log('get usert info error')
+    }
+  }
   render() {
     return (
       <BrowserRouter>
@@ -44,4 +35,12 @@ class App extends Component {
   }
 }
 
-export default App
+App.propTypes = {
+  getUserInfoAsync: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = ({ auth }) => ({
+  getUserInfoAsync: auth.getUserInfoAsync,
+})
+
+export default connect(null, mapDispatchToProps)(App)

@@ -11,6 +11,9 @@ import { compose } from 'recompose'
 import { connect } from 'react-redux'
 
 class Login extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  state = {
+    error: null,
+  }
   getInitialValue = () => ({
     email: '',
     password: '',
@@ -23,15 +26,15 @@ class Login extends React.PureComponent { // eslint-disable-line react/prefer-st
     try {
       await login({ ...credential })
     } catch (e) {
-      console.log(e)
+      this.setState({ error: e })
     }
   }
 
   render() {
     const {
       children,
-      error,
     } = this.props
+    const { error } = this.state
     return (
       React.cloneElement(children, {
         onSubmit: this.submitHandler,
@@ -44,9 +47,6 @@ class Login extends React.PureComponent { // eslint-disable-line react/prefer-st
 
 Login.propTypes = {
   children: PropTypes.node.isRequired,
-  error: PropTypes.shape({
-
-  }).isRequired,
 }
 const mapStateToProps = state => ({
   error: state.Auth.error,
