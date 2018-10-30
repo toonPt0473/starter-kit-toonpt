@@ -6,14 +6,37 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReadById from '../ReadById/index'
 import dataProvider from '../../utils/dataProvider'
-
 
 class Edit extends Component { // eslint-disable-line
   state = {
-    editError: null,
-    edit: null,
+    error: null,
+    record: {},
+  }
+  componentDidMount() {
+    this.fetchModel()
+  }
+
+  fetchModel = async () => {
+    const {
+      model,
+      modelId,
+      filter = {},
+      afterSummit,
+    } = this.props
+    if (!modelId || !model) {
+      throw new Error('Edit component require props (model & modelId)')
+    }
+    try {
+      const provider = dataProvider(`/${model}`)
+      const record = await provider.findById({ filter, id: modelId })
+      this.setState({ record })
+      if (typeof afterSummit === 'function') {
+        afterSummit()
+      }
+    } catch (error) {
+      this.setState({ error })
+    }
   }
   submitHandler = async (payload) => {
     const {
@@ -23,13 +46,13 @@ class Edit extends Component { // eslint-disable-line
     } = this.props
     try {
       const provider = dataProvider(`/${model}`)
-      const edit = provider.update({ ...payload, id: modelId })
-      this.setState({ edit })
+      const record = provider.update({ ...payload, id: modelId })
+      this.setState({ record })
       if (typeof afterSummit === 'function') {
         afterSummit()
       }
     } catch (error) {
-      this.setState({ editError: error })
+      this.setState({ error })
     }
   }
   render() {
@@ -39,29 +62,13 @@ class Edit extends Component { // eslint-disable-line
       children,
       ...rest
     } = this.props
-    return (
-      <ReadById model={model} modelId={modelId} >
-        {
-          React.Children.map(children, child => {
-              const {
-                record,
-                error,
-              } = child.props
-              const {
-                edit,
-                editError,
-              } = this.state
-              return React.cloneElement(children, {
-                ...rest,
-                onSubmit: this.submitHandler,
-                record: edit || record,
-                error,
-                editError,
-              })
-            })
-          }
-      </ReadById>
-    )
+    const { record, error } = this.state
+    return React.cloneElement(children, {
+      ...rest,
+      onSubmit: this.submitHandler,
+      record,
+      error,
+    })
   }
 }
 
