@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import dataProvider from '../../utils/dataProvider'
 
 
-class Create extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class Create extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     create: null,
     error: null,
@@ -41,7 +41,7 @@ class Create extends React.PureComponent { // eslint-disable-line react/prefer-s
       error,
     } = this.state
     return (
-      React.cloneElement(children, {
+      children({
         onSubmit: this.submitHandler,
         record: create || record,
         error,

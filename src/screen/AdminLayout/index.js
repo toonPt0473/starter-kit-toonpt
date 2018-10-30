@@ -21,7 +21,7 @@ import { AdminRouter, AdminBreadcrumb, AdminMenu } from './Helper'
 // `
 const { Content, Footer, Sider } = Layout
 // const SubMenu = Menu.SubMenu;
-export class AdminLayout extends React.PureComponent {
+export class AdminLayout extends React.Component {
   state = {
     collapsed: false,
   }

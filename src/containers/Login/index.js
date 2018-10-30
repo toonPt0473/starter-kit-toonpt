@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 
-class Login extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class Login extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     error: null,
   }
@@ -36,7 +36,7 @@ class Login extends React.PureComponent { // eslint-disable-line react/prefer-st
     } = this.props
     const { error } = this.state
     return (
-      React.cloneElement(children, {
+      children({
         onSubmit: this.submitHandler,
         record: this.getInitialValue(),
         error,

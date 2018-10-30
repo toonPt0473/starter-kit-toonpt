@@ -28,7 +28,7 @@ const formItemLayout = {
     sm: { span: 24 },
   },
 }
-class SimpleFormLayout extends React.PureComponent { // eslint-disable-line
+class SimpleFormLayout extends React.Component { // eslint-disable-line
   handleSubmit = (e) => {
     e.preventDefault()
     const {

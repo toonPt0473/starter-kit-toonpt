@@ -1,6 +1,6 @@
 /**
 *
-* Show
+* ReadById
 *
 */
 
@@ -9,7 +9,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import dataProvider from '../../utils/dataProvider'
 
-class Show extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class ReadById extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     record: {},
     error: null,
@@ -26,7 +26,7 @@ class Show extends React.PureComponent { // eslint-disable-line react/prefer-sta
       afterSummit,
     } = this.props
     if (!modelId || !model) {
-      throw new Error('Show component require props (model & modelId)')
+      throw new Error('ReadById component require props (model & modelId)')
     }
     try {
       const provider = dataProvider(`/${model}`)
@@ -43,24 +43,18 @@ class Show extends React.PureComponent { // eslint-disable-line react/prefer-sta
   render() {
     const {
       children,
-      model,
-      modelId,
-      filter,
-      ...rest
     } = this.props
     const { record, error } = this.state
     return (
-      React.cloneElement(children, {
-        ...rest,
+      children({
         record,
-        refreshRecord: this.fetchModel,
         error,
       })
     )
   }
 }
 
-Show.propTypes = {
+ReadById.propTypes = {
   children: PropTypes.node.isRequired,
   model: PropTypes.string.isRequired,
   modelId: PropTypes.string.isRequired,
@@ -68,8 +62,8 @@ Show.propTypes = {
 
   }),
 }
-Show.defaultProps = {
+ReadById.defaultProps = {
   filter: {},
 }
 
-export default Show
+export default ReadById

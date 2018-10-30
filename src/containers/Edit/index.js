@@ -4,11 +4,11 @@
 *
 */
 
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import dataProvider from '../../utils/dataProvider'
 
-class Edit extends Component { // eslint-disable-line
+class Edit extends React.Component { // eslint-disable-line
   state = {
     error: null,
     record: {},
@@ -57,14 +57,10 @@ class Edit extends Component { // eslint-disable-line
   }
   render() {
     const {
-      model,
-      modelId,
       children,
-      ...rest
     } = this.props
     const { record, error } = this.state
-    return React.cloneElement(children, {
-      ...rest,
+    return children({
       onSubmit: this.submitHandler,
       record,
       error,

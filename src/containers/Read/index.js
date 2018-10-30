@@ -9,7 +9,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import dataProvider from '../../utils/dataProvider'
 
-class List extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class Read extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     data: [],
     error: null,
@@ -39,31 +39,26 @@ class List extends React.PureComponent { // eslint-disable-line react/prefer-sta
   render() {
     const {
       children,
-      model,
-      filter,
-      ...rest
     } = this.props
     const { data, error } = this.state
     return (
-      React.cloneElement(children, {
-        ...rest,
+      children({
         data,
-        refreshData: this.fetchModel,
         error,
       })
     )
   }
 }
 
-List.propTypes = {
+Read.propTypes = {
   children: PropTypes.node.isRequired,
   model: PropTypes.string.isRequired,
   filter: PropTypes.shape({
 
   }),
 }
-List.defaultProps = {
+Read.defaultProps = {
   filter: {},
 }
 
-export default List
+export default Read
