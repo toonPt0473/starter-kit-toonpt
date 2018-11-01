@@ -1,5 +1,6 @@
 {
   "extends": ["airbnb"],
+  "plugins": ["react-hooks"],
   "env": {
     "es6": true,
     "browser": true,
@@ -8,6 +9,7 @@
   },
   "parser": "babel-eslint",
   "rules": {
+    "react-hooks/rules-of-hooks": "error",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "jsx-a11y/anchor-is-valid": [
       "error",

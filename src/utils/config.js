@@ -3,7 +3,7 @@ const ENV = {
     API_URL: 'http://localhost:3000/api',
   },
   staging: {
-    API_URL: 'https://develop.backend.evermed.dev.witsawa.com/api',
+    API_URL: 'https://develop-url.com/api',
   },
   prod: {
     API_URL: 'http://localhost:3000',
