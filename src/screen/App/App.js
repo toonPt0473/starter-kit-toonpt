@@ -14,6 +14,7 @@ class App extends Component {
   componentDidMount() {
     this.getUser()
   }
+
   getUser = async () => {
     try {
       await this.props.getUserInfoAsync()
@@ -21,6 +22,7 @@ class App extends Component {
       console.log('get usert info error')
     }
   }
+
   render() {
     return (
       <BrowserRouter>

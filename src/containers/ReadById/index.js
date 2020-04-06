@@ -14,6 +14,7 @@ class ReadById extends React.Component { // eslint-disable-line react/prefer-sta
     record: {},
     error: null,
   }
+
   componentDidMount() {
     this.fetchModel()
   }
@@ -61,6 +62,7 @@ ReadById.propTypes = {
   filter: PropTypes.shape({
 
   }),
+  afterSummit: PropTypes.func.isRequired,
 }
 ReadById.defaultProps = {
   filter: {},

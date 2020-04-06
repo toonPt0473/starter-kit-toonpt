@@ -15,6 +15,7 @@ class Create extends React.Component { // eslint-disable-line react/prefer-state
     create: null,
     error: null,
   }
+
   submitHandler = async (payload) => {
     const {
       model,
@@ -31,6 +32,7 @@ class Create extends React.Component { // eslint-disable-line react/prefer-state
       this.setState({ error })
     }
   }
+
   render() {
     const {
       children,

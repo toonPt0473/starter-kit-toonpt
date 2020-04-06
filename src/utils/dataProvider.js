@@ -1,10 +1,11 @@
 import axios from 'axios'
 import config from './config'
+import Fetch from './fetchWithCache'
 
 const { API_URL } = config
 const requestHeader = () => {
   const headers = {
-    Authorization: `Bearer ${localStorage.accessToken}`,
+    Authorization: localStorage.accessToken,
   }
   return headers
 }
@@ -64,6 +65,7 @@ export default function (endpoint, apiUrl) {
     async request(options) {
       return instance(apiUrl).request(options)
     },
+    fetch: new Fetch(API_URL, requestHeader()),
   }
 }
 export const APIURL = API_URL

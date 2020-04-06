@@ -4,22 +4,20 @@
 *
 */
 
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-class {{ extractClassName name }} extends Component { // eslint-disable-line
-  render() {
-    const {
-      children,
-      ...rest
-    } = this.props
-    return (
-      React.cloneElement(children, {
-        ...rest,
-      })
-    )
-  }
+function {{ extractClassName name }}(props) {
+  const {
+    children,
+    ...rest
+  } = props
+  return (
+    React.cloneElement(children, {
+      ...rest,
+    })
+  )
 }
 
 {{ extractClassName name }}.propTypes = {
@@ -36,3 +34,5 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
 
 })
 export default connect(mapStateToProps, mapDispatchToProps)({{ extractClassName name }})
+
+

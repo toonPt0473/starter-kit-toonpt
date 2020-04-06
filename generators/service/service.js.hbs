@@ -1,0 +1,9 @@
+import dataProvider from '../utils/dataProvider'
+
+module.exports = {
+  async get{{ extractClassName name }}() {
+    const provider = dataProvider()
+    const body = {}
+    const data = provider.fetch.get('/{{ name }}', body, { noCache: true })
+    return data
+}

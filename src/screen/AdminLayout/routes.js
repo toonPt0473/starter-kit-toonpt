@@ -41,4 +41,11 @@ export const routes = [
       },
     ],
   },
+  {
+    path: 'menu3',
+    title: 'menu3',
+    menu: 'menu3',
+    icon: 'dashboard',
+    component: AdminDashboard,
+  },
 ]

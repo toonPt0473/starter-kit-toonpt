@@ -5,6 +5,7 @@ const componentGenerator = require('./component/index.js')
 const containerGenerator = require('./container/index.js')
 const screenGenerator = require('./screen/index.js')
 const modelGenerator = require('./model/index.js')
+const serviceGenerator = require('./service')
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -23,6 +24,7 @@ module.exports = function generate(plop) {
   plop.setGenerator('component', componentGenerator)
   plop.setGenerator('container', containerGenerator)
   plop.setGenerator('screen', screenGenerator)
+  plop.setGenerator('service', serviceGenerator)
   plop.setGenerator('model', modelGenerator)
   plop.addHelper('directory', (comp) => {
     try {

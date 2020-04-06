@@ -4,22 +4,21 @@
 *
 */
 
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-// import styles from './{{ extractClassName name }}.module.css'
+// import styles from './Hello.module.css'
 // import PropTypes from 'prop-types'
 
 const Container = styled.div`
 
 `
-class {{ extractClassName name }} extends Component { // eslint-disable-line
-  render() {
-    return (
-      <Container>
-        This is {{extractClassName name}} component
-      </Container>
-    )
-  }
+
+function {{ extractClassName name }}() {
+  return (
+    <Container>
+      This is {{extractClassName name}} component
+    </Container>
+  )
 }
 
 {{ extractClassName name }}.propTypes = {
@@ -29,4 +28,5 @@ class {{ extractClassName name }} extends Component { // eslint-disable-line
 {{ extractClassName name }}.defaultProps = {
 
 }
+
 export default {{ extractClassName name }}

@@ -4,21 +4,19 @@
 *
 */
 
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 // import PropTypes from 'prop-types'
 
 const Container = styled.div`
 
 `
-class {{ screeOnName name }} extends Component { // eslint-disable-line
-  render() {
-    return (
-      <Container>
-        This is {{screeOnName name}}
-      </Container>
-    )
-  }
+function {{ screeOnName name }}() {
+  return (
+    <Container>
+      This is {{screeOnName name}}
+    </Container>
+  )
 }
 
 {{ screeOnName name }}.propTypes = {
